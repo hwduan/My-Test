@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="user" extends="struts-default">
+		
+		<action name="saveUser" class="saveUserAction">
+			<result name="success" type="redirect">listUser.action</result>
+			<result name="input">/save.jsp</result>
+		</action>
+		
+		<action name="listUser" class="listUserAction">
+			<result>/list.jsp</result>
+		</action>
+		
+		<action name="deleteUser" class="removeUserAction">
+			<result name="success" type="redirect">listUser.action</result>
+		</action>
+		
+		<action name="updatePUser" class="updatePUserAction">
+			<result name="success">/update.jsp</result>
+		</action>
+		
+		<action name="updateUser" class="updateUserAction">
+			<result name="success" type="redirect">listUser.action</result>
+			<result name="input">/update.jsp</result>
+		</action>
+		
+		<action name="generateExcel" class="generateExcelAction">
+			<result name="success" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename="AllUsers.xls"</param>
+				<param name="inputName">downloadFile</param>
+			</result>
+		</action>
+		
+	</package>
+</struts>

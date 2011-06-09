@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<!-- 通过hibernate.cfg.xml注入sessionFactory-->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
+
+	
+	
+	
+	<!--向hibernateTemplate注入sessionFactory对象 -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+<bean id="userDao" class="com.test.dao.impl.UserDAOImpl" scope="singleton">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory"/>
+	</property>
+</bean>
+
+<bean id="userService" class="com.test.service.impl.UserServiceImpl">
+	<property name="userDao" ref="userDao"></property>
+</bean>
+
+<bean id="saveUserAction" class="com.test.action.user.SaveUserAction" scope="prototype">
+	<property name="service" ref="userService"></property>
+</bean>
+
+<bean id="listUserAction" class="com.test.action.user.ListUserAction" scope="prototype">
+	<property name="service" ref="userService"></property>
+</bean>
+
+<bean id="removeUserAction" class="com.test.action.user.RemoveUserAction" scope="prototype">
+	<property name="service" ref="userService"></property>
+</bean>
+
+<bean id="updatePUserAction" class="com.test.action.user.UpdatePUserAction" scope="prototype">
+	<property name="service" ref="userService"></property>
+</bean>
+
+<bean id="updateUserAction" class="com.test.action.user.UpdateUserAction" scope="prototype">
+	<property name="service" ref="userService"></property>
+</bean>
+
+<bean id="generateExcelAction" class="com.test.action.user.GenerateExcelAction" scope="singleton">
+	<property name="service" ref="userService"></property>
+</bean>
+
+</beans>
